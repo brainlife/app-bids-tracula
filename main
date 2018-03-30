@@ -2,6 +2,8 @@
 #PBS -l nodes=1:ppn=8,walltime=24:00:00
 #PBS -N app-bids-tracula
 
+module load singularity 2> /dev/null
+
 T1=`jq -r '.t1' config.json`
 dwi=`jq -r '.dwi' config.json`
 bvec=`jq -r '.bvecs' config.json`
