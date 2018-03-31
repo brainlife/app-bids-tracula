@@ -2,8 +2,6 @@
 #PBS -l nodes=1:ppn=8,walltime=24:00:00
 #PBS -N app-bids-tracula
 
-module load singularity 2> /dev/null
-
 T1=`jq -r '.t1' config.json`
 dwi=`jq -r '.dwi' config.json`
 bvec=`jq -r '.bvecs' config.json`
@@ -42,7 +40,7 @@ fi
 #loc for output
 mkdir output
 
-singularity exec \
+singularity exec -e \
     -B $(pwd)/output:/output/$bids_sub \
     docker://bids/tracula:v6.0.0-4 \
     python3 /code/run.py input /output participant \
