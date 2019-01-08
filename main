@@ -27,8 +27,8 @@ cp $T1 input/${bids_sub}/anat/${bids_sub}_T1w.nii.gz
 jq '._inputs[] | select(.id == "t1") | .meta' config.json > input/${bids_sub}/anat/${bids_sub}_T1w.json
 
 cp $dwi input/${bids_sub}/dwi/${bids_sub}_dwi.nii.gz
-cp $bvec input/${bids_sub}/dwi/${bids_sub}_dwi.bvec
-cp $bval input/${bids_sub}/dwi/${bids_sub}_dwi.bval
+cat $bvec | tr ',' ' ' > input/${bids_sub}/dwi/${bids_sub}_dwi.bvec
+cat $bval | tr ',' ' ' > input/${bids_sub}/dwi/${bids_sub}_dwi.bval
 jq '._inputs[] | select(.id == "dwi") | .meta' config.json > input/${bids_sub}/dwi/${bids_sub}_dwi.json
 
 if [[ -n $fs && $fs != null ]]; then
