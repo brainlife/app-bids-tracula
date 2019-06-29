@@ -41,7 +41,7 @@ fi
 mkdir output
 
 #bids/tracula uses *part* of FREESURFER_LICENSE string (after *)
-fs_license=`echo $FREESURFER_LICENSE | cut -d'*' -f 2`
+fs_license=`echo $FREESURFER_LICENSE | cut -d'*' -f 2` | tr -d " "
 
 singularity exec -e \
     -B $(pwd)/output:/output/$bids_sub \
