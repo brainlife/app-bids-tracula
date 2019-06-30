@@ -40,11 +40,12 @@ fi
 #loc for output
 mkdir output
 
-singularity exec -e \
-    -B $(pwd)/output:/output/$bids_sub \
-    docker://bids/tracula:v6.0.0-4 \
-    python3 /code/run.py input /output participant \
-    --n_cpus 8 --license_key "$FREESURFER_LICENSE" \
+#bids/tracula uses *part* of FREESURFER_LICENSE string (after *)
+fs_license=`echo $FREESURFER_LICENSE | cut -d'*' -f 2 | tr -d " "`
+
+singularity exec -e -B $(pwd)/output:/output/$bids_sub docker://bids/tracula:v6.0.0-4 \
+    python3 /code/run.py input output participant \
+    --n_cpus 8 --license_key $fs_license \
     --stages all $fs_arg --participant_label $sub
 
 #exit code from the last command (singularity) will be used.
